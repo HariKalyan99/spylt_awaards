@@ -11,31 +11,31 @@ const TestimonialSection = () => {
       marginTop: "-140vh",
     });
 
-    const tl = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: ".testimonials-section",
-          start: "top bottom",
-          end: "200% top",
-          scrub: true,
-        },
-      })
-      .to(".testimonials-section .first-title", {
-        xPercent: 70,
-      })
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".testimonials-section",
+        start: "top bottom",
+        end: "200% top",
+        scrub: true,
+      },
+    });
+
+    tl.to(".testimonials-section .first-title", {
+      xPercent: 70,
+    })
       .to(
-        ".testimonials-section .second-title",
+        ".testimonials-section .sec-title",
         {
           xPercent: 25,
         },
-        "<"
+        "<",
       )
       .to(
         ".testimonials-section .third-title",
         {
           xPercent: -50,
         },
-        "<"
+        "<",
       );
 
     const pinTl = gsap.timeline({
@@ -55,45 +55,44 @@ const TestimonialSection = () => {
     });
   });
 
-  const handlePlay = (ind) => {
-    const video = vdRef.current[ind];
+  const handlePlay = (index) => {
+    const video = vdRef.current[index];
     video.play();
   };
-  const handlePause = (ind) => {
-    const video = vdRef.current[ind];
+
+  const handlePause = (index) => {
+    const video = vdRef.current[index];
     video.pause();
   };
+
   return (
     <section className="testimonials-section">
       <div className="absolute size-full flex flex-col items-center pt-[5vw]">
         <h1 className="text-black first-title">What's</h1>
-        <h1 className="text-light-brown second-title">Everyone</h1>
+        <h1 className="text-light-brown sec-title">Everyone</h1>
         <h1 className="text-black third-title">Talking</h1>
       </div>
 
       <div className="pin-box">
-        {cards.map((card, ind) => {
-          return (
-            <div
-              key={ind}
-              className={`vd-card ${card.translation} ${card.rotation}`}
-              onMouseEnter={() => handlePlay(ind)}
-              onMouseLeave={() => handlePause(ind)}
-            >
-              <video
-                ref={(el) => (vdRef.current[ind] = el)}
-                src={card.src}
-                playsInline
-                muted
-                loop
-                className="size-full object-cover"
-              />
-            </div>
-          );
-        })}
+        {cards.map((card, index) => (
+          <div
+            key={index}
+            className={`vd-card ${card.translation} ${card.rotation}`}
+            onMouseEnter={() => handlePlay(index)}
+            onMouseLeave={() => handlePause(index)}
+          >
+            <video
+              ref={(el) => (vdRef.current[index] = el)}
+              src={card.src}
+              playsInline
+              muted
+              loop
+              className="size-full object-cover"
+            />
+          </div>
+        ))}
       </div>
     </section>
   );
 };
-
 export default TestimonialSection;
